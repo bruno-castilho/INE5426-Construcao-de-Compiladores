@@ -1,11 +1,11 @@
-from LexicoAnalyzer import LexicoAnalyzer
+from LexicalAnalyzer import LexicalAnalyzer
 
 filepath = 'data/exemplo1.lcc'
 
 with open(filepath) as file:
     stream = file.read()
 
-la = LexicoAnalyzer(stream)
+la = LexicalAnalyzer(stream)
 tokens_list, symbol_table = la.run()
 
 print("#### TOKENS ####")

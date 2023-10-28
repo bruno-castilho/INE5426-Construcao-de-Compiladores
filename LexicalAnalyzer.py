@@ -1,6 +1,6 @@
 import ply.lex as lex
 
-class LexicoAnalyzer():
+class LexicalAnalyzer():
        
         reserved = {
                 'def' : 'def',
