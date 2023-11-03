@@ -21,7 +21,7 @@ class LexicalAnalyzer():
         tokens = [
                 'ident', 'int_constant', 'float_constant', 'string_constant',
                 'rparen', 'lparen', 'rbracket', 'lbracket', 'rbrace', 'lbrace', 'comma', 'semicolumn',
-                'equals', 'diff', 'menor', 'maior', 'menorequals', 'maiorequals',
+                'equal', 'diff', 'less', 'greater', 'lessequal', 'greaterequal',
                 'plus', 'minus', 'mod', 'times', 'divide', 'assign'
         ] + list(reserved.values())
 
@@ -39,12 +39,12 @@ class LexicalAnalyzer():
         t_comma			= r','
         t_semicolumn	= r';'
 
-        t_equals		= r'=='
+        t_equal		    = r'=='
         t_diff			= r'!='
-        t_menorequals	= r'<='
-        t_maiorequals 	= r'>='
-        t_menor			= r'<'
-        t_maior			= r'>'
+        t_lessequal	    = r'<='
+        t_greaterequal 	= r'>='
+        t_less			= r'<'
+        t_greater	    = r'>'
 
         t_plus   		= r'\+'
         t_minus			= r'-'
@@ -76,7 +76,7 @@ class LexicalAnalyzer():
             r'\n+'
             t.lexer.lineno += len(t.value)
 
-        def t_comment(self, t):
+        def t_comment(self):
             r'\//.*'
             pass
 

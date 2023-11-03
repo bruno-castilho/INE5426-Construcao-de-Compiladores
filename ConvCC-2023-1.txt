@@ -1,0 +1,43 @@
+PROGRAM             -> PROGRAM1 | &
+PROGRAM1            -> STATEMENT | FUNCLIST
+FUNCLIST            -> FUNCDEF FUNCLIST1
+FUNCLIST1           -> FUNCLIST | &
+FUNCDEF             -> def ident lparen PARAMLIST rparen lbrace STATELIST rbrace
+PARAMLIST           -> PARAMLIST1 | &
+PARAMLIST1          -> TYPE ident PARAMLIST2
+PARAMLIST2          -> comma PARAMLIST | &
+STATEMENT           -> VARDECL semicolumn | ATRIBSTAT semicolumn | PRINTSTAT semicolumn | READSTAT semicolumn | RETURNSTAT semicolumn | IFSTAT | FORSTAT | lbrace STATELIST rbrace | break semicolumn | semicolumn
+VARDECL             -> TYPE ident VARDECL1
+VARDECL1            -> lbracket int_constant rbracket VARDECL1 | &
+ATRIBSTAT           -> LVALUE assign ATRIBSTAT1
+ATRIBSTAT1          -> EXPRESSION | ALLOCEXPRESSION | FUNCCALL
+FUNCCALL            -> ident lparen PARAMLISTCALL rparen
+PARAMLISTCALL       -> PARAMLISTCALL1 | &
+PARAMLISTCALL1      -> ident PARAMLISTCALL2
+PARAMLISTCALL2      -> comma PARAMLISTCALL | &
+PRINTSTAT           -> print EXPRESSION
+READSTAT            -> read LVALUE
+RETURNSTAT          -> return
+IFSTAT              -> if lparen EXPRESSION rparen STATEMENT IFSTAT1
+IFSTAT1             -> else STATEMENT | &
+FORSTAT             -> for lparen ATRIBSTAT semicolumn EXPRESSION semicolumn ATRIBSTAT rparen STATEMENT
+STATELIST           -> STATEMENT STATELIST1
+STATELIST1          -> STATELIST | &
+ALLOCEXPRESSION     -> new TYPE ALLOCEXPRESSION1
+ALLOCEXPRESSION1    -> lbracket NUMEXPRESSION rbracket ALLOCEXPRESSION1
+EXPRESSION          -> NUMEXPRESSION EXPRESSION1
+EXPRESSION1         -> EXPRESSION2 | &
+EXPRESSION2         -> EXPRESSION3 NUMEXPRESSION
+EXPRESSION3         -> less | greater | lessequal | greaterequal | equal | diff
+NUMEXPRESSION       -> TERM NUMEXPRESSION1
+NUMEXPRESSION1      -> NUMEXPRESSION2 TERM NUMEXPRESSION1 | &
+NUMEXPRESSION2      -> plus | minus
+TERM                -> UNARYEXPR TERM1
+TERM1               -> TERM2 UNARYEXPR TERM1 | &
+TERM2               -> times | divide | mod
+UNARYEXPR           -> UNARYEXPR1 FACTOR
+UNARYEXPR1          -> & | plus | minus
+FACTOR              -> int_constant | float_constant | string_constant | null | LVALUE | lparen NUMEXPRESSION rparen
+LVALUE              -> ident LVALUE1
+LVALUE1             -> lbracket NUMEXPRESSION rbracket LVALUE1 | &
+TYPE                -> int | float | string
