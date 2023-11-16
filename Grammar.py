@@ -1,20 +1,28 @@
+import copy
+
 class Grammar():
 
     def __init__(self, filename):
         self.start = ''
-        self.grammar = dict()
+        self.productions = dict()
         self.first_dict = dict()
         self.follow_dict = dict()
+        self.non_terminal = set()
+        self.terminal = set()
 
         self.read(filename)
         self.calculate_first()
         self.calculate_follow()
 
-        #print(self.start)
-        print(self.grammar)
-        #print(self.first_dict)
-        #print(self.follow_dict)
 
+        #print('###FIRST###')
+        #for production_head, productions in self.first_dict.items():
+        #    print(production_head,productions)
+
+        #print('')
+        #print('###FOLLOW###')
+        #for production_head, productions in self.follow_dict.items():
+        #    print(production_head,productions)
 
     def read(self, filename):
         with open(filename, 'r') as arquivo:
@@ -25,6 +33,7 @@ class Grammar():
                 
                 left = chars_list[0]
                 right = chars_list[2:]
+                self.non_terminal = self.non_terminal.union({left})
 
                 if begin:
                     self.start = left
@@ -37,31 +46,97 @@ class Grammar():
                 for chars in right:
                     if chars != '|':
                         production.append(chars)
+                        if not chars[0].isupper():
+                            if chars[0] != '&':
+                                self.terminal = self.terminal.union({chars})
                     else:
                         productions_set.add(tuple(production))
                         production = []
 
                 productions_set.add(tuple(production))
-                self.grammar[left] = productions_set
-            
-    
-    def get_first(self):
-        first = set()
-                    
+                self.productions[left] = productions_set
 
-        return first
-    
-    
-    
     def calculate_first(self):
-        for production_head in self.grammar:
-            self.first_dict[production_head] = self.get_first()
-    
+        for production_head, productions in self.productions.items():
+            self.first_dict[production_head] = set()
+        
+        while True:
+            pre_dict = copy.deepcopy(self.first_dict)
+            for production_head, productions in self.productions.items():
+                for production in productions: 
+                    lenght = len(production)
+                    for i in range(lenght):
+                        if production[i][0].isupper():
+                            self.first_dict[production_head] = self.first_dict[production_head].union(self.first_dict[production[i]])
+                            if '&' in self.first_dict[production[i]]:
+                                if i < lenght - 1: 
+                                    self.first_dict[production_head] -= {'&'}
+                            else:
+                                break
+
+                        else:
+                            self.first_dict[production_head] = self.first_dict[production_head].union({production[i]})
+                            break
+
+
+
+            if self.first_dict == pre_dict:
+                break
+                    
     def calculate_follow(self):
-        return
+        for production_head in self.productions:
+            self.follow_dict[production_head] = set()
+
+        self.follow_dict[self.start] = {'$'}
+
+        for production_head, productions in self.productions.items():
+            for production in productions:
+                length = len(production)
+                for i in range(length):
+                    token = production[i]
+                    if token[0].isupper():
+                        for j in range(i+1,length):
+                            if not production[j][0].isupper():
+                                self.follow_dict[token] = self.follow_dict[token].union({production[j]})
+                                break
+                            else:
+                                self.follow_dict[token] = self.follow_dict[token].union(self.first_dict[production[j]]) - {'&'}
+                                if not '&' in self.first_dict[production[j]]:
+                                    break
 
 
-        
-        
-        
+        #Enquanto houvere mudançã em follow_dict
+        while True:
+            pre_dict = copy.deepcopy(self.follow_dict)
+            for production_head, productions in self.productions.items():
+                for production in productions:
+                    length = len(production)
+                    for i in range(length-1, -1, -1):
+                        token = production[i]
+                        if token[0].isupper():
+                            self.follow_dict[token] = self.follow_dict[token].union(self.follow_dict[production_head])
+                            if not '&' in self.first_dict[token]:
+                                    break
+                        else:
+                            break
+            if self.follow_dict == pre_dict:
+                break
+   
+    #GET
+    def get_first(self):
+        return self.first_dict
     
+    def get_follow(self):
+        return self.follow_dict
+    
+    def get_non_terminal(self):
+        return self.non_terminal
+    
+    def get_terminal(self):
+        return self.terminal
+    
+    def get_productions(self):
+        return self.productions
+    
+    def get_start(self):
+        return self.start

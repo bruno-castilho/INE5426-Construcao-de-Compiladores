@@ -76,7 +76,7 @@ class LexicalAnalyzer():
             r'\n+'
             t.lexer.lineno += len(t.value)
 
-        def t_comment(self):
+        def t_COMMENT(self, t):
             r'\//.*'
             pass
 
@@ -84,7 +84,7 @@ class LexicalAnalyzer():
             raise Exception("Illegal character '%s'" % t.value[0])
 
         def __init__(self, stream):
-                self.lexer = lex.lex(module=self)
+                self.lexer = lex.lex(debug=0, module=self)
                 self.lexer.input(stream)
 
         def run(self):
