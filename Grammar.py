@@ -15,14 +15,14 @@ class Grammar():
         self.calculate_follow()
 
 
-        #print('###FIRST###')
-        #for production_head, productions in self.first_dict.items():
-        #    print(production_head,productions)
+        print('###FIRST###')
+        for production_head, productions in self.first_dict.items():
+            print(production_head,productions)
 
-        #print('')
-        #print('###FOLLOW###')
-        #for production_head, productions in self.follow_dict.items():
-        #    print(production_head,productions)
+        print('')
+        print('###FOLLOW###')
+        for production_head, productions in self.follow_dict.items():
+            print(production_head,productions)
 
     def read(self, filename):
         with open(filename, 'r') as arquivo:

@@ -3,7 +3,7 @@ from Grammar import Grammar
 
 class SyntacticAnalyzer():
         def __init__(self):
-            self.grammar = Grammar('Rascunho.txt')
+            self.grammar = Grammar('ConvCC-2023-1.txt')
             self.productions_list = []
             self.table = {}
 
