@@ -24,8 +24,9 @@ READSTAT            -> read ident LVALUE
 RETURNSTAT          -> return
 IFSTAT              -> if lparen IFSTAT1
 IFSTAT1             -> UNARYEXPR IFSTAT2
-IFSTAT2             -> FACTOR TERM NUMEXPRESSION EXPRESSION1 rparen STATEMENT | ident LVALUE TERM NUMEXPRESSION EXPRESSION1 rparen STATEMENT
-ELSE                -> else STATEMENT 
+IFSTAT2             -> FACTOR TERM NUMEXPRESSION EXPRESSION1 rparen lbrace STATELIST rbrace ELSE | ident LVALUE TERM NUMEXPRESSION EXPRESSION1 rparen lbrace STATELIST rbrace ELSE
+ELSE                -> else  | &
+ELSE1               -> lbrace STATELIST rbrace | STATELIST
 FORSTAT             -> for lparen ATRIBSTAT semicolumn FORSTAT1
 FORSTAT1            -> UNARYEXPR FORSTAT2
 FORSTAT2            -> FACTOR TERM NUMEXPRESSION EXPRESSION1 semicolumn ATRIBSTAT rparen STATEMENT | ident LVALUE TERM NUMEXPRESSION EXPRESSION1 semicolumn ATRIBSTAT rparen STATEMENT
