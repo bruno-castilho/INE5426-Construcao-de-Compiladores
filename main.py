@@ -1,11 +1,12 @@
+import argparse
 from LexicalAnalyzer import LexicalAnalyzer
 from SyntacticAnalyzer import SyntacticAnalyzer
 
+parser = argparse.ArgumentParser(description="Source file input")
+args = parser.add_argument("--src", dest="src", help="Source file input", type=str)
+args = parser.parse_args()
 
-
-filepath = 'data/exemplo1.lcc'
-
-with open('data/exemplo1.lcc') as file:
+with open(args.src) as file:
     stream = file.read()
 
 la = LexicalAnalyzer(stream)
