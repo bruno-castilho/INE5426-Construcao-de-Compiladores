@@ -62,8 +62,12 @@ def round(int number, float retval)
   int rest;
   rest = number % 1;
   int return_value;
-  return_value = number - rest;
-  return_value = return_value + 1;
+  if (rest >= 0.5){
+    return_value = number - rest;
+    return_value = return_value + 1;
+  } else {
+    return_value = number - rest;
+  }
   print "Result:";
   print return_value;
 }
