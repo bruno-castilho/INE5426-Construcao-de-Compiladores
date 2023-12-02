@@ -16,7 +16,7 @@ scopes = ScopeStack()
 class Parser():
     """
         Classe responsável pela análise léxica (funcional) e análise semântica, 
-        utilizando um analisador sintático LLR (com problemas nas regras semânticas).
+        utilizando um analisador sintático LALR(1) (com problemas nas regras semânticas).
 
         Documentação da biblioteca utilizada:
         https://github.com/dabeaz/ply
