@@ -1,16 +1,27 @@
 """
-Classe responsável pela análise léxica (funcional)
-E análise semântica (com problemas nas regras semânticas)
+Bruno da Silva Castilho;
+Leonardo Seishi Yamazaki;
+Rafael Francisco Réus;
+Rafael Begnini de Castilhos.
 """
+
 import ply.lex as lex
 import ply.yacc as yacc
 from structures import ScopeStack, EntryTable, Scope, TreeNode
-from typing import Any, Dict, List, Tuple
+from typing import List, Tuple
 
 expressions: List[Tuple[TreeNode, int]] = []
 scopes = ScopeStack()
 
 class Parser():
+    """
+        Classe responsável pela análise léxica (funcional) e análise semântica, 
+        utilizando um analisador sintático LLR (com problemas nas regras semânticas).
+
+        Documentação da biblioteca utilizada:
+        https://github.com/dabeaz/ply
+
+    """
 
     reserved = {
             'def' : 'def',
@@ -91,30 +102,27 @@ class Parser():
         pass
 
     def t_error(self, t):
-        raise Exception("Illegal character '%s'" % t.value[0])
+        print("Código com erro lexico '%s'" % t.value[0])
 
-    def __init__(self, stream):
-            self.lexer = lex.lex(debug=0, module=self)
-            self.lexer.input(stream)
+
+    def __init__(self, string):
+        self.lexer = lex.lex(debug=0, module=self)
+        self.lexer.input(string)
+
 
     def lexical(self):
         tokens_list = []
-        symbol_table = {}
+        symbol_table = []
 
         for tok in self.lexer:
-            tokens_list.append(tok.type)
+            tokens_list.append(tok)
 
             if tok.type == 'ident': 
-                params = {
-                            'line': tok.lineno,
-                            'position': tok.lexpos
-                    }
-                if not tok.value in symbol_table.keys():
-                    symbol_table[tok.value] = [params]
-                else:
-                        symbol_table[tok.value].append(params)
+                symbol_table.append(tok)
+
         
         return (tokens_list, symbol_table)
+
 
     def p_error(self, t):
         pass

@@ -1,9 +1,14 @@
 SHELL := /bin/bash
 PYTHON = python3.10
 
-program_1=data/program1.lcc
-program_2=data/program2.lcc
-program_3=data/program3.lcc
+program_1=input/program1.lcc
+program_2=input/program2.lcc
+program_3=input/program3.lcc
+
+
+.PHONY:
+install:
+	@$(PYTHON) -m pip install -r requirements.txt;
 
 .PHONY:
 run:

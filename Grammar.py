@@ -1,6 +1,50 @@
+"""
+Bruno da Silva Castilho;
+Leonardo Seishi Yamazaki;
+Rafael Francisco Réus;
+Rafael Begnini de Castilhos.
+"""
 import copy
 
 class Grammar():
+    """
+        Uma classe para representar uma gramática.
+
+        ...
+
+        Atributos
+        ---------
+        start: str
+            Símbolo inicial da gramática.
+
+        productions: dict
+            Lista de produções da gramática.
+
+        first_dict: dict
+            Conjunto dos firsts.
+
+        follow_dict: dict
+            Conjunto dos follows.
+
+        non_terminal: set
+            Conjunto de não-terminais.
+
+        terminal: set
+            Conjunto de terminais.
+
+
+        Métodos
+        -------
+        read(filename: str) -> None:
+            Lê a gramática de um arquivo.
+
+        calculate_first() -> None:
+            Calcula os firsts.
+
+        calculate_follow() -> None:
+            Calcula os follows.
+
+    """
 
     def __init__(self, filename):
         self.start = ''
@@ -15,14 +59,15 @@ class Grammar():
         self.calculate_follow()
 
 
-        print('###FIRST###')
-        for production_head, productions in self.first_dict.items():
-            print(production_head,productions)
+        ## Apresenta FIRST e FOLLOW
+        #print('###FIRST###')
+        #for production_head, productions in self.first_dict.items():
+        #    print(production_head,productions)
 
-        print('')
-        print('###FOLLOW###')
-        for production_head, productions in self.follow_dict.items():
-            print(production_head,productions)
+        #print('')
+        #print('###FOLLOW###')
+        #for production_head, productions in self.follow_dict.items():
+        #    print(production_head,productions)
 
     def read(self, filename):
         with open(filename, 'r') as arquivo:

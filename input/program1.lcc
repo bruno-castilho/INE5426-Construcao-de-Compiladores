@@ -8,6 +8,7 @@ def pow(float base, int exponent, float retval)
   }
   print "Result:";
   print mult;
+
 }
 
 def exp(int exponent, float retval)
