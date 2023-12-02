@@ -67,11 +67,6 @@ class SyntacticAnalyzer():
                             self.table[self.productions_list[i][0]][token] = self.productions_list[i][1]
                             break
 
-
-
-                        
-                    
-
         def run(self, tokens):
             stack = ['$', self.grammar.get_start()]
             queue = []
@@ -104,27 +99,7 @@ class SyntacticAnalyzer():
                 else:
                     break
 
-            
-
-
             if stack[-1] == '$' and current_token == '$':
-                return 1
+                return "Análise Sintática bem sucedida"
             else:
-                return 0
-
-            
-
-
-                    
-
-
-
-            
-                
-
-                
-                 
-
-
-
-        
+                return "Análise Sintática com problemas"
