@@ -8,7 +8,13 @@
 - Rafael Begnini de Castilhos.
 
 ### Makefile:
-Foi definido a versão do Python em 3.10, pode ser que seja necessário alterar conforme a versão instalada em sua máquina.
+Foi definido a versão do Python em 3.10, pode ser que seja necessário alterar conforme a versão instalada em sua máquina (```python3 -V```).
+
+Para instalar as dependências necessárias:
+
+```
+make install
+```
 
 Para executar programas de teste na análise léxica e sintática:
 
